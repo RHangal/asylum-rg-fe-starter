@@ -97,9 +97,23 @@
   font-size: 1.4rem;
 }
 
-// .bottom-section {
-//      ADD THIS BACK IN WHEN YOU HAVE A BOTTOM SECTION
-// }
+.bottom-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 10%;
+  .statistics-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 10% auto;
+    text-align: center;
+    width: 100%;
+    .statistics-description-container {
+      max-width: 22rem;
+    }
+  }
+}
 
 .back-to-top {
   width: 8%;
