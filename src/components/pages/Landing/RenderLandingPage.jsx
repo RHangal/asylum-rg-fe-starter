@@ -46,14 +46,26 @@ function RenderLandingPage(props) {
           <h2>Search Grant Rates Over Time</h2>
         </div>
       </div>
-      <div className="view-more-data-btn-container">
-        <Button
-          type="default"
-          style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
-          onClick={() => history.push('/graphs')}
-        >
-          View the Data
-        </Button>
+      <div className="data-btns-container">
+        <div className="view-more-data-btn-container">
+          <Button
+            type="default"
+            style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
+            onClick={() => history.push('/graphs')}
+          >
+            View the Data
+          </Button>
+          <Button
+            className="download-data-btn"
+            type="default"
+            style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
+          >
+            Download the Data
+          </Button>
+        </div>
+        {/* <div className="download-data-btn-container">
+       
+        </div> */}
       </div>
 
       <div className="middle-section">
