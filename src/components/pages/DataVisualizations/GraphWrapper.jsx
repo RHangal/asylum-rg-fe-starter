@@ -20,23 +20,6 @@ function GraphWrapper(props) {
   let { office, view } = useParams();
   const [bigData, setbigData] = useState(null);
 
-  // useEffect(() => {
-  //   axios
-  //     .get('https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary')
-  //     .then(result => {
-  //       setResData(result.data);
-  //       console.log(resData);
-  //     })
-  //     .then(() => {
-  //       axios
-  //         .get('https://hrf-asylum-be-b.herokuapp.com/cases/citizenshipSummary')
-  //         .then(result => {
-  //           // resData.citizenshipResults = result;
-  //         });
-  //     });
-  //   // console.log(resData);
-  // }, []);
-
   if (!view) {
     set_view('time-series');
     view = 'time-series';
@@ -68,52 +51,41 @@ function GraphWrapper(props) {
         break;
     }
   }
+
   async function updateStateWithNewData(
     years,
     view,
     office,
     stateSettingCallback
   ) {
-    /*
-          _                                                                             _
-        |                                                                                 |
-        |   Example request for once the `/summary` endpoint is up and running:           |
-        |                                                                                 |
-        |     `${url}/summary?to=2022&from=2015&office=ZLA`                               |
-        |                                                                                 |
-        |     so in axios we will say:                                                    |
-        |                                                                                 |     
-        |       axios.get(`${url}/summary`, {                                             |
-        |         params: {                                                               |
-        |           from: <year_start>,                                                   |
-        |           to: <year_end>,                                                       |
-        |           office: <office>,       [ <-- this one is optional! when    ]         |
-        |         },                        [ querying by `all offices` there's ]         |
-        |       })                          [ no `office` param in the query    ]         |
-        |                                                                                 |
-          _                                                                             _
-                                   -- Mack 
-    
-    */
-
-    if (office === 'all' || !office) {
+    if (view === 'citizenship') {
       try {
         const res = await axios.get(
           'https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary'
         );
         const resData = [res.data];
-        console.log(resData);
         const citizen = await axios.get(
           'https://hrf-asylum-be-b.herokuapp.com/cases/citizenshipSummary'
         );
-        const citizenData = citizen.data;
-        console.log(citizenData);
-        setbigData([{ ...resData[0], citizenshipResults: citizenData }]);
+        stateSettingCallback(view, office, [
+          { ...resData[0], citizenshipResults: citizen.data },
+        ]);
         console.log(bigData);
-        stateSettingCallback(view, office, bigData);
-      } catch (err) {}
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      try {
+        const res = await axios.get(
+          'https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary'
+        );
+        stateSettingCallback(view, office, [res.data]);
+      } catch (err) {
+        console.error(err);
+      }
     }
   }
+
   const clearQuery = (view, office) => {
     dispatch(resetVisualizationQuery(view, office));
   };
