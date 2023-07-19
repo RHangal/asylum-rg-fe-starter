@@ -54,7 +54,6 @@ function MainBar(props) {
     values.push(i);
   }
   const n_ticks = values.length;
-
   let leftStart = parseInt(years[0]);
   let rightStart = parseInt(years[1]);
   useInterval(() => {
