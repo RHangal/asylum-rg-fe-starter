@@ -5,3 +5,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import 'jest-prop-type-error';
 import 'jest-canvas-mock';
+if (typeof window.URL.createObjectURL === 'undefined') {
+  window.URL.createObjectURL = jest.fn();
+}

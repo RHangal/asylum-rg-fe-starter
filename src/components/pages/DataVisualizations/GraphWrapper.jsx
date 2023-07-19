@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import CitizenshipMapAll from './Graphs/CitizenshipMapAll';
@@ -18,7 +18,6 @@ const { background_color } = colors;
 function GraphWrapper(props) {
   const { set_view, dispatch } = props;
   let { office, view } = useParams();
-  const [bigData, setbigData] = useState(null);
 
   if (!view) {
     set_view('time-series');
@@ -70,7 +69,6 @@ function GraphWrapper(props) {
         stateSettingCallback(view, office, [
           { ...resData[0], citizenshipResults: citizen.data },
         ]);
-        console.log(bigData);
       } catch (err) {
         console.error(err);
       }
