@@ -2,7 +2,6 @@
 import { render, screen } from '@testing-library/react';
 import axios from 'axios';
 import Table from '../components/pages/DataVisualizations/Graphs/TableComponents/Table';
-import TimeSeriesAll from '../components/pages/DataVisualizations/Graphs/TimeSeriesAll';
 
 describe('Testing the DataShape', () => {
   let data;
@@ -26,28 +25,28 @@ describe('Testing the DataShape', () => {
       expect(typeof data.data[0].race_or_ethnicity).toBe('string');
     });
   });
+});
 
-  describe('Table renders to the screen with data', () => {
-    test('[4] Table renders to the screen with data', async () => {
-      const res = await axios.get(
-        'https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary'
-      );
-      render(
-        <Table
-          columns={[
-            'Fiscal Year',
-            'Total Cases',
-            '% Granted',
-            '% Admin Close / Dismissal',
-            '% Denied',
-          ]}
-          rows={[res.data]}
-          tableWidth={'100%'}
-          rowHeight={'50px'}
-        />
-      );
-      const asylumOfficeString = screen.getByText(/fiscal year/i);
-      expect(asylumOfficeString).toBeInTheDocument();
-    });
+describe('Table renders to the screen with data', () => {
+  test('[4] Table renders to the screen with data', async () => {
+    const res = await axios.get(
+      'https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary'
+    );
+    render(
+      <Table
+        columns={[
+          'Fiscal Year',
+          'Total Cases',
+          '% Granted',
+          '% Admin Close / Dismissal',
+          '% Denied',
+        ]}
+        rows={[res.data]}
+        tableWidth={'100%'}
+        rowHeight={'50px'}
+      />
+    );
+    const asylumOfficeString = screen.getByText(/fiscal year/i);
+    expect(asylumOfficeString).toBeInTheDocument();
   });
 });
