@@ -6,7 +6,9 @@ const LoginButton = () => {
   return (
     <button
       className="btn btn-primary btn-block"
-      onClick={() => loginWithRedirect()}
+      onClick={async () => {
+        await loginWithRedirect();
+      }}
     >
       Log In
     </button>
